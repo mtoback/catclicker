@@ -15,15 +15,26 @@ var model = {
   },
 
   getClicks: function(cat){
-    var index = cat.indexOf(cat);
+    var index = model.cats.indexOf(cat);
     if(index != -1){
       return model.clicks[index];
     } else {
       return -1;
     }
+  },
+  isCurrentCat: function(cat){
+    var index = model.cats.indexOf(cat);
+    if(index != -1){
+      return index === model.currentCat;
+    }
+  },
+  updateClicks: function(cat, clicks){
+   var index = model.cats.indexOf(cat);
+    if(index != -1){
+      model.clicks[index] = parseInt(clicks);
+    }
   }
 }
-
 var catListView = {
 /** generate the list of cats from the names, appearing on the left side */
 init: function (){
@@ -58,7 +69,8 @@ var adminFormView = {
       $("#adminform").toggle();
     });
     $("#admin-submit").click(function(){
-      alert("update " + $(".btn:first-child").val() + " to " + $("#admin-clicks").val());
+      controller.updateCat($(".btn:first-child").val(),$("#admin-clicks").val());
+      $("#adminform").toggle();
     });
     $(".dropdown-menu").on('click', 'li a', function(){
           $(".btn:first-child").text($(this).text());
@@ -66,7 +78,7 @@ var adminFormView = {
           var clickVal = controller.getClicks($(this).text())
           $("#admin-clicks").val(clickVal);
        });
-    $(".dropdown-menu li a")[1].click();
+    $(".dropdown-menu li a")[0].click();
     }
 }
 var controller = {
@@ -118,6 +130,12 @@ var controller = {
   getClicks: function(cat){
     var clicks =  model.getClicks(cat);
     return clicks;
+  },
+  updateCat: function(cat, clicks){
+    model.updateClicks(cat, clicks);
+    if (model.isCurrentCat(cat)){
+      controller.update_clicks();
+    }
   }
 
 };
