@@ -8,7 +8,20 @@ var model = {
   // this will store the clicks associated with each cat above
   clicks : [],
   /**initialize the application to show the first cat**/
-  currentCat : 0
+  currentCat : 0,
+
+  getCats: function(){
+    return cats;
+  },
+
+  getClicks: function(cat){
+    var index = cat.indexOf(cat);
+    if(index != -1){
+      return model.clicks[index];
+    } else {
+      return -1;
+    }
+  }
 }
 
 var catListView = {
@@ -41,7 +54,20 @@ var adminFormView = {
     for (var i= 0; i <model.cats.length; i++){
       $("#dropdown-menu").append('<li><a tabindex="-1" href="#">' + model.cats[i] + '</a></li>');
     }
-  }
+    $("#admin").click(function(){
+      $("#adminform").toggle();
+    });
+    $("#admin-submit").click(function(){
+      alert("update " + $(".btn:first-child").val() + " to " + $("#admin-clicks").val());
+    });
+    $(".dropdown-menu").on('click', 'li a', function(){
+          $(".btn:first-child").text($(this).text());
+          $(".btn:first-child").val($(this).text());
+          var clickVal = controller.getClicks($(this).text())
+          $("#admin-clicks").val(clickVal);
+       });
+    $(".dropdown-menu li a")[1].click();
+    }
 }
 var controller = {
   /** initialize the model and view
@@ -62,12 +88,6 @@ var controller = {
       controller.update_image();
     });
 
-    $("#admin").click(function(){
-      $("#adminform").toggle();
-    });
-    $("#admin-submit").click(function(){
-      alert("update " + $(".btn:first-child").val() + " to " + $("#admin-clicks").val())
-    });
     // when clicking on image div update the click count
     $('#image').click(function(){
       model.clicks[model.currentCat] += 1;
@@ -77,10 +97,6 @@ var controller = {
     catListView.init();
     catImageView.init();
     adminFormView.init();
-    $(".dropdown-menu").on('click', 'li a', function(){
-          $(".btn:first-child").text($(this).text());
-          $(".btn:first-child").val($(this).text());
-       });
   },
   initializeList: function(){
   for (var index = 0; index < model.cats.length; index++) {
@@ -94,7 +110,16 @@ var controller = {
   },
   update_clicks: function(currentCat,clicks){
     $('#clicks').text(model.clicks[model.currentCat]);
+  },
+  getCats: function(){
+    return model.getCats();
+  },
+
+  getClicks: function(cat){
+    var clicks =  model.getClicks(cat);
+    return clicks;
   }
+
 };
 controller.init();
 
