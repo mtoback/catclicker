@@ -36,7 +36,13 @@ init: function (){
     controller.update_clicks();
   }
 }
-
+var adminFormView = {
+  init: function(){
+    for (var i= 0; i <model.cats.length; i++){
+      $("#dropdown-menu").append('<li><a tabindex="-1" href="#">' + model.cats[i] + '</a></li>');
+    }
+  }
+}
 var controller = {
   /** initialize the model and view
   clicks get set to 0, view gets set to the first cat image **/
@@ -56,6 +62,12 @@ var controller = {
       controller.update_image();
     });
 
+    $("#admin").click(function(){
+      $("#adminform").toggle();
+    });
+    $("#admin-submit").click(function(){
+      alert("update " + $(".btn:first-child").val() + " to " + $("#admin-clicks").val())
+    });
     // when clicking on image div update the click count
     $('#image').click(function(){
       model.clicks[model.currentCat] += 1;
@@ -64,6 +76,11 @@ var controller = {
 
     catListView.init();
     catImageView.init();
+    adminFormView.init();
+    $(".dropdown-menu").on('click', 'li a', function(){
+          $(".btn:first-child").text($(this).text());
+          $(".btn:first-child").val($(this).text());
+       });
   },
   initializeList: function(){
   for (var index = 0; index < model.cats.length; index++) {

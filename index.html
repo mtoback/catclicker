@@ -20,10 +20,32 @@
                 </div>
                 <div id="image">
                 </div>
+                <div class="row"><span>&nbsp;</span></div>
+                <div class="row" id="admin-form">
+                    <div class="col-md-2">
+                        <button id="admin">ADMIN</button>
+                    </div>
+                    <div id="adminform" class="col-md-10" style="display:none">
+                        <form>
+                            <div class="btn-group">
+                                <button class="btn">Cat Name</button>
+                                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" id="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                                </ul>
+                            </div><br/>
+                            <label for="admin-clicks">Clicks</label>
+                            <input id="admin-clicks" type="number" min="0"/><br/>
+                            <button id="admin-submit" type="submit">Submit</button><button type="admin-cancel" type="cancel">Cancel</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <script src="js/libs/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
