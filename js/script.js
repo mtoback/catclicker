@@ -33,7 +33,7 @@ init: function (){
   },
   render: function(){
     controller.update_image();
-    controller.update_clicks()
+    controller.update_clicks();
   }
 }
 
