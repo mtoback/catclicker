@@ -11,14 +11,24 @@ var model = {
   currentCat : 0
 }
 
-var view = {
+var catListView = {
 /** generate the list of cats from the names, appearing on the left side */
 init: function (){
   $("#cat-list").append('<ul style="list-style: none"  id="cats">');
   controller.initializeList();
+
+  },
+  render: function(){
+  }
+}
+
+
+var catImageView = {
+/** generate the list of cats from the names, appearing on the left side */
+init: function (){
   /** now that we have the list initialize the image from it **/
   $('#image').html('<div><span>' + model.cats[model.currentCat] + '</span>: <span id="clicks">' + model.clicks[model. currentCat] + '</span></div>' +
-    	'<img src="img/cat' + model.currentCat + '.jpg" height=400>');
+      '<img src="img/cat' + model.currentCat + '.jpg" height=400>');
 
   },
   render: function(){
@@ -28,7 +38,10 @@ init: function (){
 }
 
 var controller = {
+  /** initialize the model and view
+  clicks get set to 0, view gets set to the first cat image **/
   init: function(){
+    model.currentCat = 0;
     for (var index = 0; index < model.cats.length; index++) {
       model.clicks.push(0);
     }
@@ -48,7 +61,9 @@ var controller = {
       model.clicks[model.currentCat] += 1;
       controller.update_clicks();
     });
-    view.init();
+
+    catListView.init();
+    catImageView.init();
   },
   initializeList: function(){
   for (var index = 0; index < model.cats.length; index++) {
